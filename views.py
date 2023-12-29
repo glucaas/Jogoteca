@@ -41,8 +41,30 @@ def editar(id):
 
 @app.route('/atualizar', methods = ['POST'])
 def atualizar():
-    pass
-
+    id = request.form['id']
+    jogo = Jogos.query.filter_by(id = id).first()
+    jogo.nome = request.form['nome']
+    jogo.categoria = request.form['categoria']
+    jogo.console = request.form['console']
+    
+    db.session.add(jogo)
+    db.session.commit()
+    
+    return redirect(url_for('index'))
+    
+@app.route('/deletar/<int:id>')
+def deletar(id):
+    if('usuario_logado' not in session or session['usuario_logado'] is None):
+        return redirect(url_for('login'))
+    
+    jogo = Jogos.query.filter_by(id = id).first()
+    
+    db.session.delete(jogo)
+    db.session.commit()
+    
+    flash(f'O jogo: {jogo.nome} deletado com sucesso')
+    return redirect(url_for('index'))
+    
 @app.route('/login')
 def login():
     redirect_url = request.args.get('redirect_url')
