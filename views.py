@@ -1,6 +1,6 @@
-from flask import render_template, request, redirect, session, flash, url_for, logging
 from jogoteca import app, db
 from models import Jogos, Usuarios
+from flask import render_template, request, redirect, session, flash, url_for, logging
 
 @app.route('/')
 def index():
