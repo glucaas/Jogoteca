@@ -30,6 +30,19 @@ def criar():
     
     return redirect(url_for('index')) 
 
+@app.route('/editar/<int:id>')
+def editar(id):
+    if('usuario_logado' not in session or session['usuario_logado'] is None):
+        return redirect(url_for('login',redirect_url = url_for('editar')))
+        ##return redirect('/login?redirect_url=novo') antes, mas depois de deixar a url dinamica
+        
+    jogo = Jogos.query.filter_by(id = id).first()
+    return render_template('editar.html', titulo = 'Editando Jogo', jogo = jogo) 
+
+@app.route('/atualizar', methods = ['POST'])
+def atualizar():
+    pass
+
 @app.route('/login')
 def login():
     redirect_url = request.args.get('redirect_url')
