@@ -1,0 +1,24 @@
+version: '3'
+
+networks:
+  db_network:
+    driver:
+      bridge
+services:
+  mysql:
+    image: mysql:8.0.35
+    networks:
+      - db_network
+    container_name: my-local-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: 123
+    volumes:
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    ports:
+      - "3306:3306"
+
+
+  
