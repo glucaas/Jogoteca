@@ -29,8 +29,8 @@ def criar():
     db.session.commit()
     
     arquivo = request.files['arquivo']
-    arquivo.save(f'uploads/{arquivo.filename}')
-    arquivo.close()
+    upload_path = app.config['UPLOAD_PATH']
+    arquivo.save(f'{upload_path}/game_{novo_jogo.id}')
     
     return redirect(url_for('index')) 
 
